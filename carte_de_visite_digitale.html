@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Votre Nom | Courtier</title>
+    <style>
+        /* CSS fourni dans style.css */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f7f6; /* Gris très clair, professionnel */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            width: 100%;
+            max-width: 400px;
+            padding: 40px 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            border-top: 5px solid #1a3c5e; /* Une couleur de confiance (bleu foncé) */
+        }
+
+        /* Ajout optionnel pour la photo de profil */
+        .profile-pic {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 3px solid #1a3c5e;
+        }
+
+        h1 {
+            color: #1a3c5e;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .title {
+            color: #555;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .company {
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .contact-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: background 0.3s ease, transform 0.1s ease;
+            color: #333;
+            background: #f0f0f0;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background: #e0e0e0;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-primary {
+            background: #1a3c5e;
+            color: white;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background: #0f2a44;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <!-- Photo de profil fictive en démonstration -->
+        <img src="https://placehold.co/150x150/1a3c5e/ffffff?text=VN" alt="Nomez Najac" class="profile-pic">
+        
+        <h1>NOMEZ NAJAC</h1>
+        <p class="title">Courtier hypothécaire stagiaire</p>
+        <p class="company">Multi-Prêts</p>
+
+        <div class="contact-links">
+            <a href="tel:+33612345678" class="btn">📞 438-829 5285</a>
+            <a href="mailto:contact@votre-domaine.com" class="btn">✉️ nnajac@multi-prets.ca</a>
+           
+        </div>
+
+        <!-- Le bouton magique pour la vCard -->
+        <button id="save-contact" class="btn btn-primary">📇 Ajouter à mes contacts</button>
+    </div>
+
+    <script>
+        // JS fourni dans script.js
+        document.addEventListener('DOMContentLoaded', () => {
+            const saveBtn = document.getElementById('save-contact');
+
+            saveBtn.addEventListener('click', () => {
+                // 1. Définition des données de la vCard
+                // On utilise le format 3.0, le plus compatible (iOS/Android/Outlook)
+                const vCardData = `BEGIN:VCARD
+VERSION:3.0
+N:Nom;Prénom;;;
+FN:Prénom Nom
+ORG:Nom de votre Cabinet
+TITLE:Courtier
+TEL;TYPE=WORK,VOICE:+33612345678
+EMAIL;TYPE=WORK:contact@votre-domaine.com
+URL:https://votre-site.com
+END:VCARD`;
+
+                // 2. Création du fichier (Blob)
+                const blob = new Blob([vCardData], { type: 'text/vcard' });
+                const url = URL.createObjectURL(blob);
+
+                // 3. Création d'un lien temporaire pour déclencher le téléchargement
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'contact.vcf'; // Le nom du fichier téléchargé
+                document.body.appendChild(a);
+                a.click();
+
+                // 4. Nettoyage
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            });
+        });
+    </script>
+</body>
+</html>
